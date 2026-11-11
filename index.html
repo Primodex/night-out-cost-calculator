@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Cost of a Night Out Drinking in the 50 Largest U.S. Metros</title>
+<style>
+.no-widget{
+  --accent:#E8783C; --accent-dark:#A84E1C; --green:#4A5D45; --green-dark:#36452F;
+  --ink:#222; --muted:#555; --line:#DDD8D2; --soft:#F7F4F0; --card:#fff;
+  font-family:"Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink); background:var(--card); line-height:1.55; font-size:16px;
+  max-width:1160px; margin:0 auto; padding:8px 16px 24px; box-sizing:border-box;
+}
+.no-widget *,.no-widget *::before,.no-widget *::after{box-sizing:border-box}
+.no-widget h2,.no-widget h3{font-family:Lora,Georgia,"Times New Roman",serif;color:var(--green-dark);line-height:1.25;margin:0 0 .4em}
+.no-widget h2{font-size:1.6rem}
+.no-widget h3{font-size:1.15rem}
+.no-widget p{margin:0 0 .8em}
+.no-section{padding:22px 0;border-top:4px solid var(--accent)}
+.no-section+.no-section{margin-top:18px}
+.no-lede{color:var(--muted)}
+.no-outing{display:flex;flex-wrap:wrap;gap:6px;padding:0;margin:0 0 14px;list-style:none}
+.no-outing li{background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:3px 12px;font-size:.88rem}
+/* table */
+.no-tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;-webkit-overflow-scrolling:touch}
+.no-table{border-collapse:collapse;width:100%;min-width:720px;font-size:.88rem}
+.no-table th,.no-table td{padding:9px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.no-table td.num,.no-table th.num{text-align:right;font-variant-numeric:tabular-nums}
+.no-table thead th{background:var(--soft);font-weight:600;padding:0}
+.no-table thead th button{all:unset;box-sizing:border-box;display:block;width:100%;padding:10px;cursor:pointer;font-weight:600;color:var(--green-dark);font-size:.8rem;padding:9px 6px}
+.no-table thead th.num button{text-align:right}
+.no-table thead th button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.no-table thead th button .arr{display:inline-block;width:1em;color:var(--accent-dark)}
+.no-table tbody tr:last-child td{border-bottom:0}
+.no-table th[scope=row]{font-weight:600}
+.no-sticky{position:sticky;left:0;background:var(--card);z-index:1}
+thead .no-sticky{background:var(--soft);z-index:2}
+.no-tier{display:inline-block;white-space:nowrap;font-size:.8rem;font-weight:600;padding:2px 8px;border-radius:4px;line-height:1.35}
+.no-t1{background:#FBE3D5;color:#7A3410}
+.no-t2{background:#FDEEE4;color:#7A3410}
+.no-t3{background:#ECEBE7;color:#3D3D3D}
+.no-t4{background:#fff;color:#555;border:1px solid #CFC9C2}
+.no-found{display:block;font-size:.76rem;font-weight:400;color:var(--muted);margin-top:2px}
+.no-table td.no-cmp{color:var(--muted)}
+.no-na{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.no-table th[scope=row].no-sticky{min-width:10.5em}
+.no-warn{background:#FFF6EF;border:1px solid #F1C7AC;border-radius:6px;padding:10px 12px;font-size:.92rem;margin-bottom:12px;font-weight:600;color:#7A3410}
+.no-warn[hidden]{display:none}
+.no-tag{display:block;font-size:.76rem;font-weight:400;color:var(--muted);margin-top:2px}
+.no-tag.limited{color:#7A3410;font-weight:600}
+.no-range{color:var(--muted);white-space:nowrap}
+.no-sortnote{font-size:.85rem;color:var(--muted);margin:8px 0 0}
+.no-notes{font-size:.85rem;color:var(--muted);margin:12px 0 0;padding-left:1.2em}
+.no-notes li{margin-bottom:4px}
+/* calculator */
+.no-calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:24px;align-items:start}
+.no-form{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:16px}
+.no-field{margin-bottom:14px}
+.no-field label,.no-field legend{display:block;font-weight:600;margin-bottom:4px;font-size:.95rem}
+.no-field .hint{display:block;font-size:.82rem;color:var(--muted);margin-top:3px}
+.no-field select,.no-field input[type=number]{width:100%;font:inherit;padding:9px 10px;border:1px solid #9C958D;border-radius:6px;background:#fff;color:var(--ink)}
+.no-widget select:focus-visible,.no-widget input:focus-visible,.no-widget button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.no-money{position:relative}
+.no-money span{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.no-money input[type=number]{padding-left:22px}
+.no-check{display:flex;gap:8px;align-items:flex-start;font-weight:400 !important}
+.no-check input{margin-top:5px;width:18px;height:18px;accent-color:var(--green)}
+.no-years{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px}
+.no-year{border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff}
+.no-year .lbl{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.no-year .big{font-family:Lora,Georgia,serif;font-size:1.45rem;font-weight:700;color:var(--green-dark);font-variant-numeric:tabular-nums;line-height:1.2;word-break:break-word}
+.no-year .sub{font-size:.82rem;color:var(--muted)}
+.no-summary{font-size:1.05rem;margin-bottom:12px}
+.no-summary strong{color:var(--green-dark)}
+.no-seg{display:inline-flex;border:1px solid var(--green);border-radius:6px;overflow:hidden;margin:4px 0 12px}
+.no-seg button{all:unset;cursor:pointer;padding:6px 14px;font-size:.9rem;color:var(--green-dark)}
+.no-seg button[aria-pressed=true]{background:var(--green);color:#fff}
+.no-seg button:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
+.no-fund{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.no-fund li{border-left:4px solid var(--accent);background:var(--soft);padding:10px 12px;border-radius:0 6px 6px 0}
+.no-fund .v{font-family:Lora,Georgia,serif;font-size:1.2rem;font-weight:700;color:var(--green-dark)}
+.no-fund .no-ourcalc{font-style:italic;margin-top:4px}
+.no-method .no-credit{display:block;margin-top:4px}
+.no-fund .d{font-size:.84rem;color:var(--muted)}
+.no-msg{background:#FFF6EF;border:1px solid #F1C7AC;border-radius:6px;padding:10px 12px;font-size:.92rem;margin-bottom:12px}
+.no-msg[hidden]{display:none}
+.no-share{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px}
+.no-btn{font:inherit;font-size:.9rem;font-weight:600;padding:8px 14px;border-radius:6px;border:0;background:var(--green);color:#fff;cursor:pointer}
+.no-btn:hover{background:var(--green-dark)}
+.no-share input{flex:1 1 220px;font:inherit;font-size:.82rem;padding:7px 8px;border:1px solid var(--line);border-radius:6px;color:var(--muted);min-width:0}
+.no-share input[hidden]{display:none}
+.no-status{font-size:.85rem;color:var(--green-dark)}
+.no-own{border:1px solid var(--line);border-radius:6px;padding:8px 12px;margin:0 0 14px;background:#fff}
+.no-own summary{cursor:pointer;font-weight:600;font-size:.95rem;color:var(--green-dark)}
+.no-own summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.no-own[open] summary{margin-bottom:8px}
+.no-own .no-field input[type=text]{width:100%;font:inherit;padding:9px 10px 9px 22px;border:1px solid #9C958D;border-radius:6px;background:#fff;color:var(--ink)}
+.no-own > .hint{display:block;font-size:.82rem;color:var(--muted);margin:0 0 8px}
+.no-cmpline{font-size:.9rem;color:var(--muted);margin:-6px 0 12px}
+.no-cmpline[hidden]{display:none}
+.no-illus{font-size:.85rem;color:var(--muted);margin:12px 0 0}
+.no-assume{margin-top:18px;border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.no-assume ul{margin:0;padding-left:1.2em;font-size:.88rem;color:var(--muted)}
+.no-assume li{margin-bottom:4px}
+.no-method{font-size:.88rem;color:var(--muted)}
+.no-method ul{padding-left:1.2em;margin:0 0 .8em}
+.no-method li{margin-bottom:4px}
+.no-vh{position:absolute !important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:760px){
+  .no-calc{grid-template-columns:1fr}
+  .no-widget h2{font-size:1.35rem}
+}
+@media (max-width:480px){
+  .no-years{grid-template-columns:1fr}
+  .no-year{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .no-fund{grid-template-columns:1fr}
+}
+.no-sortbar{display:none;margin:0 0 10px;font-size:.92rem}
+.no-sortbar label{font-weight:600;margin-right:6px}
+.no-sortbar select{font:inherit;padding:7px 8px;border:1px solid #9C958D;border-radius:6px;background:#fff;max-width:100%}
+.no-table td .lab{display:none}
+.no-table td.tiercell{min-width:7em}
+.no-table{min-width:0}
+@media (max-width:1060px){
+  .no-sortbar{display:block}
+  .no-tablewrap{border:0;overflow:visible}
+  .no-table{min-width:0;font-size:.92rem}
+  .no-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .no-table,.no-table tbody{display:block}
+  .no-table tr{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:10px}
+  .no-table th[scope=row]{grid-column:1/-1;min-width:0 !important;border:0;padding:0;font-size:1.05rem;position:static}
+  .no-table td{border:0;padding:0;text-align:left !important}
+  .no-table td.tiercell{grid-column:1/-1;min-width:0}
+  .no-table td.no-blank{display:none}
+  .no-table td .lab{display:block;font-size:.75rem;color:var(--muted)}
+  .no-range{white-space:normal}
+}
+@media (prefers-reduced-motion:reduce){.no-widget *{transition:none !important;animation:none !important}}
+</style>
+</head>
+<body style="margin:0">
+<div class="no-widget" id="night-out-widget">
+
+<section class="no-section" aria-labelledby="no-h-table">
+  <h2 id="no-h-table">The Cost of a Night Out Drinking in the 50 Largest U.S. Metros</h2>
+  <p class="no-lede">We estimated the same night out in the 50 largest U.S. metro areas, using bar menu prices, local price levels, local taxes and rideshare rates. Every metro uses one modeled estimate, so all 50 are compared the same way. For reference, 16 metros also have a measured total from 8 or more bars, 18 more have 3 or more sampled bars (12 with 5 or more, 6 with 3 to 4), 12 have 1 or 2, and 4 have none.</p>
+  <ul class="no-outing" aria-label="The standard night out">
+    <li>3 drinks (a beer, a cocktail and a glass of wine)</li><li>1 appetizer</li><li>Two 5-mile rideshare trips</li><li>Local taxes</li><li>20% tip on the bar bill</li>
+  </ul>
+  <div class="no-sortbar"><label for="no-sortsel">Sort by</label> <select id="no-sortsel"></select></div>
+  <div class="no-tablewrap" role="region" aria-labelledby="no-h-table" tabindex="0">
+    <table class="no-table" id="no-table">
+      <caption class="no-vh">Cost of a standard night out in the 50 largest U.S. metros. Column headers are buttons that sort the table.</caption>
+      <thead><tr id="no-thead"></tr></thead>
+      <tbody id="no-tbody"></tbody>
+    </table>
+  </div>
+  <p class="no-sortnote" id="no-sortnote" aria-live="polite"></p>
+  <ul class="no-notes">
+    <li>These are estimates for a standard night out, built from sampled menu prices. They are not what residents actually spend.</li>
+    <li>Every metro uses the same modeled estimate for its night out cost and hours of work. The measured total, for comparison, is shown only for the 16 metros with 8 or more bars priced.</li>
+    <li>Price groups are broad bands from the modeled estimate, for all 50 metros: Highest cost, Next highest, Higher cost and All other metros. Order inside a group means nothing.</li>
+    <li>Modeled estimate: a typical menu basket from the metros where we measured menu prices, scaled by each metro’s local price level, plus local taxes, a 20% tip and an estimated rideshare cost. It is not a measured price.</li>
+    <li>For the 34 metros without measured prices, we show the middle price of each item from the bars we sampled (sampled bars, not for ranking). They are not used for any group or rank. Fresno, Hartford, Milwaukee and Riverside have no sampled bars yet.</li>
+    <li>* Atlanta’s local drink tax is not included, because the city does not publish its rate. Atlanta’s total may be slightly low.</li>
+    <li>Nashville’s beer price comes from only 4 bars.</li>
+    <li>Cost of living is the overall price level of each metro area (U.S. average = 100), not only the price of a night out. It comes from the Bureau of Economic Analysis (2024).</li>
+    <li>Median rent is the monthly median gross rent for the metro area, from the Census Bureau.</li>
+    <li>Hours of work uses the local median hourly wage for all jobs, before tax. The median wage column shows that wage for every metro.</li>
+    <li>Rideshare is estimated from published rate cards, for two one-way rides of 5 miles and 15 minutes each, with no surge pricing. Where a metro has no rate card, a national average is used. Rideshare is not taxed or tipped in these estimates.</li>
+  </ul>
+</section>
+
+<section class="no-section" aria-labelledby="no-h-calc">
+  <h2 id="no-h-calc">How Much a Weekly Night Out Costs Over 1, 5 and 10 Years</h2>
+  <div class="no-calc">
+    <form class="no-form" id="no-form" novalidate onsubmit="return false">
+      <div class="no-field">
+        <label for="no-metro">Metro</label>
+        <select id="no-metro"></select>
+      </div>
+      <div class="no-field">
+        <label for="no-freq">Nights out per week</label>
+        <input type="number" id="no-freq" inputmode="decimal" min="0.25" max="7" step="0.25" value="1" aria-describedby="no-freq-h">
+        <span class="hint" id="no-freq-h">From 0.25 (about once a month) to 7.</span>
+      </div>
+      <div class="no-field">
+        <label for="no-drinks">Drinks per night</label>
+        <select id="no-drinks" aria-describedby="no-drinks-h"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select>
+        <span class="hint" id="no-drinks-h">The standard night out has 3 drinks: a beer, a cocktail and a glass of wine.</span>
+      </div>
+      <div class="no-field">
+        <label for="no-repl">What you’d spend instead, per night</label>
+        <div class="no-money"><span aria-hidden="true">$</span><input type="number" id="no-repl" inputmode="decimal" min="0" step="1" value="0" aria-describedby="no-repl-h"></div>
+        <span class="hint" id="no-repl-h">For example, dinner at home or a movie. Leave at $0 to count the full cost as savings.</span>
+      </div>
+      <details class="no-own" id="no-own">
+        <summary>Use your own numbers (optional)</summary>
+        <p class="hint">Leave any box blank to use our figure.</p>
+        <div class="no-field">
+          <label for="no-owncost">Your cost per night</label>
+          <div class="no-money"><span aria-hidden="true">$</span><input type="text" id="no-owncost" inputmode="decimal" autocomplete="off" aria-describedby="no-owncost-h"></div>
+          <span class="hint" id="no-owncost-h">Replaces the metro figure and the drinks setting. Up to $1,000.</span>
+        </div>
+        <div class="no-field">
+          <label for="no-rent">Your monthly rent</label>
+          <div class="no-money"><span aria-hidden="true">$</span><input type="text" id="no-rent" inputmode="decimal" autocomplete="off"></div>
+        </div>
+        <div class="no-field">
+          <label for="no-trip">Your trip budget</label>
+          <div class="no-money"><span aria-hidden="true">$</span><input type="text" id="no-trip" inputmode="decimal" autocomplete="off"></div>
+        </div>
+        <div class="no-field">
+          <label for="no-goal">Your emergency savings goal</label>
+          <div class="no-money"><span aria-hidden="true">$</span><input type="text" id="no-goal" inputmode="decimal" autocomplete="off"></div>
+        </div>
+        <div class="no-field">
+          <label for="no-debt">Your debt balance</label>
+          <div class="no-money"><span aria-hidden="true">$</span><input type="text" id="no-debt" inputmode="decimal" autocomplete="off"></div>
+        </div>
+      </details>
+      <div class="no-field">
+        <label class="no-check"><input type="checkbox" id="no-infl"> <span>Add rising prices (based on the recent national average rise in prices for food away from home)</span></label>
+      </div>
+    </form>
+
+    <div aria-live="polite" id="no-out">
+      <div class="no-warn" id="no-warn" role="note" hidden></div>
+      <p class="no-summary" id="no-summary"></p>
+      <p class="no-cmpline" id="no-cmpline" hidden></p>
+      <div class="no-years" id="no-years"></div>
+      <div class="no-msg" id="no-msg" hidden></div>
+      <div id="no-fundwrap">
+        <h3 id="no-h-fund">What the savings could fund</h3>
+        <div class="no-seg" role="group" aria-label="Choose a time period">
+          <button type="button" data-y="1" aria-pressed="false">1 year</button>
+          <button type="button" data-y="5" aria-pressed="false">5 years</button>
+          <button type="button" data-y="10" aria-pressed="false">10 years</button>
+        </div>
+        <ul class="no-fund" id="no-fund" aria-labelledby="no-h-fund"></ul>
+      </div>
+      <p class="no-illus">This calculator is for illustration only. It is not financial advice.</p>
+      <div class="no-share">
+        <button type="button" class="no-btn" id="no-copy">Copy a link to this result</button>
+        <span class="no-status" id="no-status" role="status"></span>
+        <input type="text" id="no-link" readonly aria-label="Link to this result" hidden>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-assume" aria-labelledby="no-h-assume">
+    <h3 id="no-h-assume">How the calculator works</h3>
+    <ul id="no-assume-list"></ul>
+  </div>
+</section>
+
+<section class="no-section no-method" aria-labelledby="no-h-method">
+  <h3 id="no-h-method">Methodology and sources</h3>
+  <ul id="no-method-list"></ul>
+</section>
+
+</div>
+
+<script id="night-out-data" type="application/json">{"metros":[{"metro":"New York","group":1,"measured":true,"total":113.64,"rideshare":34.7,"hours":3.85,"wage":29.53,"rpp":112.563,"rent":1830.0,"beer_n":4,"model":94.01,"model_hours":3.18,"calc":94.01,"dp":42.8993,"dsrc":"modeled","venues":10},{"metro":"Los Angeles","group":3,"measured":true,"total":86.29,"rideshare":28.0,"hours":3.21,"wage":26.85,"rpp":113.566,"rent":2063.0,"beer_n":7,"model":88.21,"model_hours":3.29,"calc":88.21,"dp":43.5497,"dsrc":"modeled","venues":8},{"metro":"Chicago","group":3,"measured":true,"total":90.98,"rideshare":28.1,"hours":3.46,"wage":26.31,"rpp":103.595,"rent":1430.0,"beer_n":9,"model":85.93,"model_hours":3.27,"calc":85.93,"dp":41.8335,"dsrc":"modeled","venues":12},{"metro":"Dallas","group":4,"measured":true,"total":77.08,"rideshare":24.5,"hours":3.12,"wage":24.73,"rpp":103.09,"rent":1614.0,"beer_n":3,"model":80.98,"model_hours":3.27,"calc":80.98,"dp":40.8554,"dsrc":"modeled","venues":10},{"metro":"Houston","group":4,"measured":true,"total":81.63,"rideshare":25.2,"hours":3.44,"wage":23.76,"rpp":98.629,"rent":1430.0,"beer_n":4,"model":80.45,"model_hours":3.39,"calc":80.45,"dp":39.9617,"dsrc":"modeled","venues":11},{"metro":"Atlanta","group":4,"measured":true,"total":81.94,"rideshare":24.9,"hours":3.33,"wage":24.6,"rpp":100.058,"rent":1672.0,"beer_n":8,"model":80.83,"model_hours":3.29,"calc":80.83,"dp":40.4541,"dsrc":"modeled","venues":13},{"metro":"Washington","group":3,"measured":false,"total":null,"rideshare":29.5,"hours":null,"wage":34.16,"rpp":108.884,"rent":2027.0,"beer_n":3,"model":88.34,"model_hours":2.59,"calc":88.34,"dp":42.5607,"dsrc":"modeled","venues":6,"band":"5 or more sampled bars","prices":{"beer":8.75,"cocktail":17.5,"wine":12.5,"app":16.0}},{"metro":"Miami","group":3,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":23.39,"rpp":114.155,"rent":1869.0,"beer_n":3,"model":84.86,"model_hours":3.63,"calc":84.86,"dp":42.5731,"dsrc":"modeled","venues":4,"band":"3 to 4 sampled bars","prices":{"beer":9.0,"cocktail":16.0,"wine":11.5,"app":12.88}},{"metro":"Philadelphia","group":3,"measured":true,"total":88.38,"rideshare":28.5,"hours":3.39,"wage":26.11,"rpp":102.554,"rent":1480.0,"beer_n":8,"model":85.36,"model_hours":3.27,"calc":85.36,"dp":41.3051,"dsrc":"modeled","venues":19},{"metro":"Phoenix","group":4,"measured":false,"total":null,"rideshare":24.2,"hours":null,"wage":24.7,"rpp":103.316,"rent":1702.0,"beer_n":4,"model":81.12,"model_hours":3.28,"calc":81.12,"dp":41.1712,"dsrc":"modeled","venues":7,"band":"5 or more sampled bars","prices":{"beer":6.5,"cocktail":14.25,"wine":12.0,"app":12.0}},{"metro":"Boston","group":3,"measured":false,"total":null,"rideshare":30.2,"hours":null,"wage":32.03,"rpp":108.266,"rent":2023.0,"beer_n":3,"model":87.52,"model_hours":2.73,"calc":87.52,"dp":41.4604,"dsrc":"modeled","venues":6,"band":"5 or more sampled bars","prices":{"beer":9.0,"cocktail":14.5,"wine":13.0,"app":16.0}},{"metro":"Riverside","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":23.27,"rpp":106.442,"rent":1846.0,"beer_n":0,"model":83.62,"model_hours":3.59,"calc":83.62,"dp":41.6761,"dsrc":"modeled","venues":0,"band":"No sampled bars","prices":{"beer":null,"cocktail":null,"wine":null,"app":null}},{"metro":"San Francisco","group":2,"measured":true,"total":93.78,"rideshare":31.4,"hours":2.63,"wage":35.7,"rpp":115.613,"rent":2474.0,"beer_n":8,"model":91.39,"model_hours":2.56,"calc":91.39,"dp":43.3923,"dsrc":"modeled","venues":8},{"metro":"Detroit","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":25.04,"rpp":100.298,"rent":1207.0,"beer_n":3,"model":80.73,"model_hours":3.22,"calc":80.73,"dp":39.5914,"dsrc":"modeled","venues":3,"band":"3 to 4 sampled bars","prices":{"beer":6.0,"cocktail":15.0,"wine":8.5,"app":13.22}},{"metro":"Seattle","group":3,"measured":true,"total":92.28,"rideshare":28.8,"hours":2.64,"wage":34.91,"rpp":111.133,"rent":2000.0,"beer_n":14,"model":88.49,"model_hours":2.53,"calc":88.49,"dp":43.1799,"dsrc":"modeled","venues":18},{"metro":"Minneapolis","group":4,"measured":false,"total":null,"rideshare":25.6,"hours":null,"wage":28.52,"rpp":104.822,"rent":1440.0,"beer_n":4,"model":83.7,"model_hours":2.93,"calc":83.7,"dp":42.2492,"dsrc":"modeled","venues":7,"band":"5 or more sampled bars","prices":{"beer":7.0,"cocktail":12.25,"wine":9.0,"app":14.0}},{"metro":"Tampa","group":4,"measured":false,"total":null,"rideshare":24.46,"hours":null,"wage":23.53,"rpp":100.89,"rent":1628.0,"beer_n":1,"model":80.01,"model_hours":3.4,"calc":80.01,"dp":40.1807,"dsrc":"modeled","venues":1,"band":"1 or 2 sampled bars","prices":{"beer":3.0,"cocktail":12.25,"wine":null,"app":10.0}},{"metro":"San Diego","group":3,"measured":false,"total":null,"rideshare":29.3,"hours":null,"wage":28.21,"rpp":111.887,"rent":2246.0,"beer_n":4,"model":87.91,"model_hours":3.12,"calc":87.91,"dp":42.3969,"dsrc":"modeled","venues":5,"band":"5 or more sampled bars","prices":{"beer":8.5,"cocktail":15.0,"wine":12.0,"app":9.62}},{"metro":"Denver","group":4,"measured":true,"total":82.23,"rideshare":25.3,"hours":2.74,"wage":29.96,"rpp":105.782,"rent":1874.0,"beer_n":7,"model":82.4,"model_hours":2.75,"calc":82.4,"dp":41.3047,"dsrc":"modeled","venues":14},{"metro":"Orlando","group":4,"measured":false,"total":null,"rideshare":24.46,"hours":null,"wage":22.42,"rpp":101.418,"rent":1760.0,"beer_n":4,"model":79.72,"model_hours":3.56,"calc":79.72,"dp":39.9698,"dsrc":"modeled","venues":5,"band":"5 or more sampled bars","prices":{"beer":6.5,"cocktail":14.25,"wine":10.0,"app":10.5}},{"metro":"Charlotte","group":4,"measured":false,"total":null,"rideshare":26.18,"hours":null,"wage":24.03,"rpp":97.348,"rent":1473.0,"beer_n":1,"model":81.49,"model_hours":3.39,"calc":81.49,"dp":40.0109,"dsrc":"modeled","venues":5,"band":"5 or more sampled bars","prices":{"beer":5.5,"cocktail":16.0,"wine":12.0,"app":12.0}},{"metro":"Baltimore","group":3,"measured":false,"total":null,"rideshare":29.5,"hours":null,"wage":28.4,"rpp":104.487,"rent":1611.0,"beer_n":3,"model":86.33,"model_hours":3.04,"calc":86.33,"dp":41.3718,"dsrc":"modeled","venues":5,"band":"5 or more sampled bars","prices":{"beer":7.0,"cocktail":14.0,"wine":9.0,"app":14.0}},{"metro":"St. Louis","group":4,"measured":true,"total":77.84,"rideshare":26.0,"hours":3.24,"wage":24.03,"rpp":95.088,"rent":1113.0,"beer_n":4,"model":80.85,"model_hours":3.36,"calc":80.85,"dp":39.6749,"dsrc":"modeled","venues":8},{"metro":"San Antonio","group":4,"measured":true,"total":78.75,"rideshare":23.6,"hours":3.48,"wage":22.6,"rpp":94.716,"rent":1363.0,"beer_n":7,"model":77.74,"model_hours":3.44,"calc":77.74,"dp":39.1609,"dsrc":"modeled","venues":8},{"metro":"Austin","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":27.38,"rpp":98.066,"rent":1726.0,"beer_n":3,"model":81.09,"model_hours":2.96,"calc":81.09,"dp":39.8474,"dsrc":"modeled","venues":4,"band":"3 to 4 sampled bars","prices":{"beer":7.0,"cocktail":14.5,"wine":11.0,"app":11.0}},{"metro":"Portland","group":4,"measured":false,"total":null,"rideshare":27.2,"hours":null,"wage":29.18,"rpp":105.421,"rent":1724.0,"beer_n":4,"model":80.64,"model_hours":2.76,"calc":80.64,"dp":38.657,"dsrc":"modeled","venues":5,"band":"5 or more sampled bars","prices":{"beer":7.0,"cocktail":15.0,"wine":9.0,"app":8.5}},{"metro":"Sacramento","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":28.73,"rpp":106.67,"rent":1819.0,"beer_n":2,"model":83.68,"model_hours":2.91,"calc":83.68,"dp":41.7208,"dsrc":"modeled","venues":2,"band":"1 or 2 sampled bars","prices":{"beer":6.5,"cocktail":14.0,"wine":11.5,"app":9.75}},{"metro":"Pittsburgh","group":4,"measured":true,"total":79.66,"rideshare":26.0,"hours":3.34,"wage":23.87,"rpp":94.671,"rent":1053.0,"beer_n":6,"model":79.6,"model_hours":3.33,"calc":79.6,"dp":38.77,"dsrc":"modeled","venues":8},{"metro":"Las Vegas","group":4,"measured":false,"total":null,"rideshare":27.0,"hours":null,"wage":22.44,"rpp":100.215,"rent":1626.0,"beer_n":2,"model":82.74,"model_hours":3.69,"calc":82.74,"dp":40.3209,"dsrc":"modeled","venues":2,"band":"1 or 2 sampled bars","prices":{"beer":6.5,"cocktail":16.0,"wine":8.5,"app":null}},{"metro":"Cincinnati","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":24.12,"rpp":95.37,"rent":1105.0,"beer_n":0,"model":80.13,"model_hours":3.32,"calc":80.13,"dp":39.158,"dsrc":"modeled","venues":1,"band":"1 or 2 sampled bars","prices":{"beer":null,"cocktail":10.0,"wine":9.0,"app":8.0}},{"metro":"Kansas City","group":4,"measured":true,"total":80.35,"rideshare":26.0,"hours":3.29,"wage":24.44,"rpp":92.543,"rent":1249.0,"beer_n":3,"model":80.65,"model_hours":3.3,"calc":80.65,"dp":39.5316,"dsrc":"modeled","venues":8},{"metro":"Columbus","group":4,"measured":false,"total":null,"rideshare":26.4,"hours":null,"wage":24.69,"rpp":95.469,"rent":1274.0,"beer_n":1,"model":80.65,"model_hours":3.27,"calc":80.65,"dp":39.2396,"dsrc":"modeled","venues":3,"band":"3 to 4 sampled bars","prices":{"beer":5.5,"cocktail":14.0,"wine":11.0,"app":15.0}},{"metro":"Indianapolis","group":4,"measured":false,"total":null,"rideshare":24.14,"hours":null,"wage":23.72,"rpp":95.696,"rent":1191.0,"beer_n":3,"model":78.88,"model_hours":3.33,"calc":78.88,"dp":39.5932,"dsrc":"modeled","venues":4,"band":"3 to 4 sampled bars","prices":{"beer":7.0,"cocktail":11.0,"wine":7.0,"app":7.81}},{"metro":"Nashville","group":3,"measured":true,"total":84.18,"rideshare":25.14,"hours":3.47,"wage":24.23,"rpp":96.338,"rent":1528.0,"beer_n":4,"model":84.11,"model_hours":3.47,"calc":84.11,"dp":43.6926,"dsrc":"modeled","venues":8},{"metro":"Cleveland","group":4,"measured":true,"total":76.56,"rideshare":26.0,"hours":3.18,"wage":24.11,"rpp":93.923,"rent":1050.0,"beer_n":3,"model":79.81,"model_hours":3.31,"calc":79.81,"dp":38.9206,"dsrc":"modeled","venues":8},{"metro":"San Jose","group":2,"measured":false,"total":null,"rideshare":31.4,"hours":null,"wage":40.41,"rpp":110.423,"rent":2840.0,"beer_n":1,"model":90.65,"model_hours":2.24,"calc":90.65,"dp":42.8605,"dsrc":"modeled","venues":1,"band":"1 or 2 sampled bars","prices":{"beer":9.0,"cocktail":18.0,"wine":null,"app":5.5}},{"metro":"Virginia Beach","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":23.76,"rpp":97.941,"rent":1478.0,"beer_n":0,"model":82.66,"model_hours":3.48,"calc":82.66,"dp":40.9864,"dsrc":"modeled","venues":1,"band":"1 or 2 sampled bars","prices":{"beer":7.0,"cocktail":10.0,"wine":8.0,"app":7.0}},{"metro":"Jacksonville","group":4,"measured":false,"total":null,"rideshare":24.46,"hours":null,"wage":23.48,"rpp":99.484,"rent":1513.0,"beer_n":1,"model":79.62,"model_hours":3.39,"calc":79.62,"dp":39.8998,"dsrc":"modeled","venues":1,"band":"1 or 2 sampled bars","prices":{"beer":5.0,"cocktail":12.0,"wine":9.0,"app":null}},{"metro":"Providence","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":25.81,"rpp":101.773,"rent":1307.0,"beer_n":3,"model":82.01,"model_hours":3.18,"calc":82.01,"dp":40.5145,"dsrc":"modeled","venues":5,"band":"5 or more sampled bars","prices":{"beer":7.0,"cocktail":14.0,"wine":11.0,"app":13.0}},{"metro":"Raleigh","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":24.99,"rpp":98.157,"rent":1573.0,"beer_n":1,"model":81.11,"model_hours":3.25,"calc":81.11,"dp":39.8659,"dsrc":"modeled","venues":1,"band":"1 or 2 sampled bars","prices":{"beer":5.0,"cocktail":14.0,"wine":11.0,"app":null}},{"metro":"Milwaukee","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":24.6,"rpp":96.937,"rent":1139.0,"beer_n":0,"model":80.83,"model_hours":3.29,"calc":80.83,"dp":39.6637,"dsrc":"modeled","venues":0,"band":"No sampled bars","prices":{"beer":null,"cocktail":null,"wine":null,"app":null}},{"metro":"Oklahoma City","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":22.71,"rpp":90.408,"rent":1124.0,"beer_n":1,"model":83.08,"model_hours":3.66,"calc":83.08,"dp":42.3992,"dsrc":"modeled","venues":2,"band":"1 or 2 sampled bars","prices":{"beer":5.0,"cocktail":13.0,"wine":9.5,"app":13.0}},{"metro":"Louisville","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":23.25,"rpp":93.074,"rent":1116.0,"beer_n":0,"model":78.73,"model_hours":3.39,"calc":78.73,"dp":38.1389,"dsrc":"modeled","venues":1,"band":"1 or 2 sampled bars","prices":{"beer":7.0,"cocktail":13.0,"wine":10.0,"app":12.0}},{"metro":"Richmond","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":24.74,"rpp":97.858,"rent":1447.0,"beer_n":0,"model":83.28,"model_hours":3.37,"calc":83.28,"dp":41.4346,"dsrc":"modeled","venues":2,"band":"1 or 2 sampled bars","prices":{"beer":4.0,"cocktail":9.75,"wine":6.75,"app":8.86}},{"metro":"Memphis","group":4,"measured":false,"total":null,"rideshare":25.14,"hours":null,"wage":22.54,"rpp":92.179,"rent":1220.0,"beer_n":3,"model":82.83,"model_hours":3.67,"calc":82.83,"dp":42.7391,"dsrc":"modeled","venues":4,"band":"3 to 4 sampled bars","prices":{"beer":6.0,"cocktail":10.0,"wine":9.0,"app":12.0}},{"metro":"Salt Lake City","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":26.56,"rpp":100.868,"rent":1583.0,"beer_n":6,"model":82.39,"model_hours":3.1,"calc":82.39,"dp":40.7908,"dsrc":"modeled","venues":7,"band":"5 or more sampled bars","prices":{"beer":5.75,"cocktail":14.5,"wine":11.0,"app":7.0}},{"metro":"Fresno","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":22.55,"rpp":102.158,"rent":1392.0,"beer_n":0,"model":82.27,"model_hours":3.65,"calc":82.27,"dp":40.702,"dsrc":"modeled","venues":0,"band":"No sampled bars","prices":{"beer":null,"cocktail":null,"wine":null,"app":null}},{"metro":"Birmingham","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":22.97,"rpp":91.644,"rent":1172.0,"beer_n":0,"model":80.56,"model_hours":3.51,"calc":80.56,"dp":39.6242,"dsrc":"modeled","venues":1,"band":"1 or 2 sampled bars","prices":{"beer":null,"cocktail":14.0,"wine":12.0,"app":8.0}},{"metro":"Grand Rapids","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":22.87,"rpp":95.546,"rent":1202.0,"beer_n":3,"model":79.42,"model_hours":3.47,"calc":79.42,"dp":38.6421,"dsrc":"modeled","venues":6,"band":"5 or more sampled bars","prices":{"beer":5.0,"cocktail":12.5,"wine":9.0,"app":11.0}},{"metro":"Hartford","group":4,"measured":false,"total":null,"rideshare":26.0,"hours":null,"wage":28.82,"rpp":102.746,"rent":1416.0,"beer_n":0,"model":81.99,"model_hours":2.84,"calc":81.99,"dp":40.5009,"dsrc":"modeled","venues":0,"band":"No sampled bars","prices":{"beer":null,"cocktail":null,"wine":null,"app":null}}],"reference":{"cushion":20476.25,"debt":63455.49},"method":["<strong>The standard night out:<\/strong> one draft beer, one cocktail, one glass of wine and one appetizer, each at the median price across the bars priced in that metro. We add local sales and drink taxes, a 20% tip on the food and drink before tax, and two one-way rideshare trips of 5 miles each.","<strong>Metros:<\/strong> the 50 largest U.S. metro areas, based on 2025 Census Bureau population estimates.","<strong>Menu prices:<\/strong> our own sample of 278 bars in 46 metros. We took bars in published order from editorial “best bars” guides, then from citywide bar lists by local publications and official tourism boards. In some metros we read the menus by hand. We used the same rules in every metro. Prices come only from each bar’s own website or menu, at regular prices (not happy hour).","<strong>Price groups:<\/strong> broad bands for all 50 metros, taken from the modeled estimate. We re-ran the estimate 2,000 times with different settings, and a new band starts where a metro is clearly lower than the top of the band before it in nearly all runs. These bands are grouped into four: Highest cost, Next highest, Higher cost and All other metros. Order inside a group means nothing.","<strong>Measured and modeled:<\/strong> every metro uses the same modeled estimate in the table and the calculator, so all 50 are compared the same way. It is not a measured price. For the 16 metros with 8 or more bars priced, the measured total from menu prices we collected is shown for comparison. In the measured data, only New York is clearly above the rest.","<strong>Modeled estimate:<\/strong> a typical menu basket (the middle price of each item across the 16 measured metros), scaled by each metro’s local price level, plus local taxes, a 20% tip and an estimated rideshare cost. Hours of work for the estimate use the same local median wage.","Sampled bars. For the 34 metros without enough bars for a measured total, we priced the same beer, cocktail, wine and appetizer at the bars we could find with usable menu prices, using the same rules as the 16 measured metros: bars from editorial ‘best bars’ lists and other citywide bar lists, taken in published order, regular menu prices, no happy hour prices, and the middle price for each item. 18 of these metros have 3 or more sampled bars, 12 have one or two, and 4 have none. These prices are shown for reference. They are not ranked and they do not set a group. The calculator uses the modeled estimate for every metro.","<strong>Rideshare:<\/strong> estimated from published rate cards for two 5-mile, 15-minute rides, with no surge pricing. Where a metro has no rate card, a national average is used.","<strong>Taxes:<\/strong> sales and drink tax rates from official state, county and city tax pages.","<strong>Wages:<\/strong> Bureau of Labor Statistics, median hourly wage for all jobs by metro area (May 2025), before tax.","<strong>Rent:<\/strong> Census Bureau, American Community Survey 5-year estimates, median gross rent by metro area.","<strong>Emergency fund:<\/strong> three months of average yearly household spending in the U.S. (Bureau of Labor Statistics, Consumer Expenditure Surveys, 2025). This is a national figure used for every metro.","<strong>Debt:<\/strong> Federal Reserve Bank of New York, Household Debt and Credit Report, average total debt per person with a credit report (second quarter of 2026). This is a national figure.<br><span class='no-credit'>© 2026 Federal Reserve Bank of New York. Content from the New York Fed subject to the Terms of Use at newyorkfed.org.<\/span>","<strong>Cost of living:<\/strong> Bureau of Economic Analysis, Regional Price Parities, all items, 2024, by metro area. The U.S. average is 100.","<strong>Rising prices:<\/strong> Bureau of Labor Statistics Consumer Price Index, the recent national average rise in prices for food away from home."]}</script>
+<script>
+(function(){
+"use strict";
+/* ===== CONFIG: edit these values, not the code below ===== */
+var CONFIG = {
+  EXAMPLE_TRIP_BUDGET_USD: 2000,      /* example trip budget, not data */
+  INFLATION_RATE_PCT: 3.46,           /* BLS CPI-U food away from home, 12-month change */
+  DEFAULT_METRO: "New York",
+  DEFAULT_OUTINGS_PER_WEEK: 1,
+  MIN_OUTINGS_PER_WEEK: 0.25,
+  MAX_OUTINGS_PER_WEEK: 7,
+  DEFAULT_REPLACEMENT_USD: 0,
+  DEFAULT_FUND_YEARS: 10,
+  WEEKS_PER_YEAR: 52,
+  GROUP_LABELS: {"1":"Highest cost","2":"Next highest","3":"Higher cost","4":"All other metros"},
+  MODELED_WARNING: "Modeled estimate, not a measured price.",
+  COMPARE_LABEL: "Measured total, for comparison",
+  DEFAULT_DRINKS: 3,             /* the standard night out: beer, cocktail, wine */
+  MIN_DRINKS: 1,
+  MAX_DRINKS: 6,
+  OWN_COST_MAX_USD: 1000,
+  RENT_MAX_USD: 100000,
+  GOAL_MAX_USD: 10000000         /* cap for trip budget, emergency savings goal and debt balance boxes */
+};
+/* ===== end CONFIG ===== */
+
+var DATA;
+try { DATA = JSON.parse(document.getElementById("night-out-data").textContent); } catch(e){ return; }
+var METROS = DATA.metros, REF = DATA.reference;
+var byName = {}; METROS.forEach(function(m){ byName[m.metro]=m; });
+function $(id){ return document.getElementById(id); }
+function usd(n, cents){
+  if(!isFinite(n)) n = 0;
+  return "$" + n.toLocaleString("en-US",{minimumFractionDigits:cents?2:0, maximumFractionDigits:cents?2:0});
+}
+function num(n, d){ if(!isFinite(n)) n=0; return n.toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+/* ---------- TABLE ---------- */
+var COLS = [
+  {key:"metro", label:"Metro", type:"text", sticky:true},
+  {key:"group", label:"Price group", type:"num"},
+  {key:"model", label:"Modeled night out estimate", type:"num", num:true},
+  {key:"rideshare", label:"Of which rideshare", type:"num", num:true},
+  {key:"model_hours", label:"Modeled hours of work", type:"num", num:true},
+  {key:"total", label:"Measured total, for comparison", type:"num", num:true},
+  {key:"rpp", label:"Cost of living (U.S. = 100)", type:"num", num:true},
+  {key:"rent", label:"Median rent (per month)", type:"num", num:true},
+  {key:"wage", label:"Median wage (per hour)", type:"num", num:true},
+  {key:"venues", label:"Bars priced", type:"num", num:true}
+];
+var sortState = {key:"default", dir:1}, sortSel = null;
+function defaultCmp(a,b){ return (a.group-b.group) || a.metro.localeCompare(b.metro); }
+function renderHead(){
+  var h = "";
+  COLS.forEach(function(c){
+    var active = sortState.key===c.key;
+    var aria = active ? (sortState.dir>0?"ascending":"descending") : "none";
+    var arr = active ? (sortState.dir>0?"\u25B2":"\u25BC") : "";
+    var mw = "";
+    h += '<th scope="col"'+mw+' aria-sort="'+aria+'" class="'+(c.num?"num ":"")+(c.sticky?"no-sticky":"")+'">' +
+         '<button type="button" data-k="'+c.key+'">'+esc(c.label)+' <span class="arr" aria-hidden="true">'+arr+'</span></button></th>';
+  });
+  $("no-thead").innerHTML = h;
+}
+function na(m){ return '<span class="no-na">Not measured</span>'; }
+function foundLine(p){
+  var parts=[]; [["beer","beer"],["cocktail","cocktail"],["wine","wine"],["app","appetizer"]].forEach(function(k){ if(p[k[0]]!=null) parts.push(k[1]+" "+usd(p[k[0]],true)); });
+  return parts.length ? '<span class="no-found">Sampled bars, not for ranking: '+parts.join(", ")+"</span>" : "";
+}
+function renderBody(){
+  var rows = METROS.slice();
+  if(sortState.key==="default"){ rows.sort(defaultCmp); }
+  else {
+    var k=sortState.key, d=sortState.dir;
+    rows.sort(function(a,b){
+      if(k==="metro") return a.metro.localeCompare(b.metro)*d;
+      var x=a[k], y=b[k];
+      if(x==null && y==null) return defaultCmp(a,b);
+      if(x==null) return 1;            /* metros without a value always sort last */
+      if(y==null) return -1;
+      return (x-y)*d || defaultCmp(a,b);
+    });
+  }
+  var h="";
+  rows.forEach(function(m){
+    var tags = "";
+    if(!m.measured) tags += '<span class="no-tag">'+esc(m.band)+'</span>';
+    if(m.metro==="Nashville") tags += '<span class="no-tag">Beer price based on '+m.beer_n+' bars</span>';
+    if(!m.measured && m.prices) tags += foundLine(m.prices);
+    h += "<tr>" +
+      '<th scope="row" class="no-sticky">'+esc(m.metro)+(m.metro==="Atlanta"?'<span aria-label=" see note on drink tax">*</span>':"")+tags+"</th>" +
+      '<td class="tiercell"><span class="no-tier no-t'+m.group+'">'+esc(CONFIG.GROUP_LABELS[String(m.group)]||"")+"</span></td>" +
+      '<td class="num"><span class="lab">Modeled night out estimate</span><strong>'+usd(m.model,true)+"</strong></td>" +
+      '<td class="num"><span class="lab">Of which rideshare</span>'+usd(m.rideshare,true)+"</td>" +
+      '<td class="num"><span class="lab">Modeled hours of work</span>'+num(m.model_hours,2)+"</td>" +
+      (m.measured ? '<td class="num no-cmp"><span class="lab">'+esc(CONFIG.COMPARE_LABEL)+'</span>'+usd(m.total,true)+"</td>"
+                  : '<td class="num no-cmp no-blank" aria-label="none"></td>') +
+      '<td class="num"><span class="lab">Cost of living (U.S. = 100)</span>'+num(m.rpp,1)+"</td>" +
+      '<td class="num"><span class="lab">Median rent (per month)</span>'+usd(m.rent)+"</td>" +
+      '<td class="num"><span class="lab">Median wage (per hour)</span>'+usd(m.wage,true)+"</td>" +
+      '<td class="num"><span class="lab">Bars priced</span>'+m.venues+"</td></tr>";
+  });
+  $("no-tbody").innerHTML = h;
+  var tail = " Select the column again to reverse, or a third time to return to the default order.";
+  var note = "Sorted by price group, then metro name A to Z. Order inside a group means nothing.";
+  if(sortState.key!=="default"){
+    var c = COLS.filter(function(x){return x.key===sortState.key;})[0];
+    var dirw = sortState.dir>0?", low to high":", high to low";
+    if(sortState.key==="metro") note = "Sorted by metro name, " + (sortState.dir>0?"A to Z":"Z to A") + "." + tail;
+    else if(sortState.key==="rpp") note = "Sorted by cost of living"+dirw+". This is the overall price level of each metro area, not the price of a night out."+tail;
+    else if(sortState.key==="rent") note = "Sorted by median rent"+dirw+"."+tail;
+    else if(sortState.key==="total") note = "Sorted by measured total, for comparison"+dirw+". Only the metros with a measured total are in order; the rest are listed last."+tail;
+    else if(sortState.key==="model") note = "Sorted by modeled night out estimate"+dirw+". This is a modeled estimate, not a measured price."+tail;
+    else if(sortState.key==="model_hours") note = "Sorted by modeled hours of work"+dirw+". This is a modeled estimate, not a measured price."+tail;
+    else if(sortState.key==="wage") note = "Sorted by median hourly wage"+dirw+"."+tail;
+    else if(sortState.key==="venues") note = "Sorted by number of bars priced"+dirw+"."+tail;
+    else if(sortState.key==="group") note = "Sorted by price group"+dirw+". Order inside a group means nothing."+tail;
+    else note = "Sorted by "+c.label.toLowerCase()+dirw+". Metros without this number are listed last. Order inside a price group does not mean one metro costs more than another."+tail;
+  }
+  $("no-sortnote").textContent = note;
+  var sv = sortState.key+":"+sortState.dir; if(sortSel && sortSel.value!==sv) sortSel.value=sv;
+}
+sortSel = $("no-sortsel");
+(function(){
+  var opts=[["default:1","Price group, then metro A to Z"]];
+  COLS.forEach(function(c){
+    var lab = c.label;
+    if(c.key==="metro"){ opts.push(["metro:1","Metro, A to Z"],["metro:-1","Metro, Z to A"]); }
+    else { opts.push([c.key+":1",lab+", low to high"],[c.key+":-1",lab+", high to low"]); }
+  });
+  sortSel.innerHTML = opts.map(function(o){return '<option value="'+o[0]+'">'+esc(o[1])+"</option>";}).join("");
+})();
+sortSel.addEventListener("change", function(){
+  var p = sortSel.value.split(":"); sortState={key:p[0],dir:+p[1]}; renderHead(); renderBody();
+});
+$("no-thead").addEventListener("click", function(e){
+  var b = e.target.closest("button"); if(!b) return;
+  var k = b.getAttribute("data-k");
+  if(sortState.key!==k){ sortState={key:k, dir:1}; }
+  else if(sortState.dir===1){ sortState.dir=-1; }
+  else { sortState={key:"default",dir:1}; }
+  renderHead(); renderBody();
+  var nb = $("no-thead").querySelector('button[data-k="'+k+'"]'); if(nb) nb.focus();
+});
+renderHead(); renderBody();
+
+/* ---------- CALCULATOR ---------- */
+var sel = $("no-metro");
+METROS.slice().sort(function(a,b){return a.metro.localeCompare(b.metro);}).forEach(function(m){
+  var o=document.createElement("option"); o.value=m.metro;
+  o.textContent = m.metro+" ("+usd(m.calc,true)+" per night)";
+  sel.appendChild(o);
+});
+var fundYears = CONFIG.DEFAULT_FUND_YEARS;
+
+function readState(){
+  var metro = byName[sel.value] ? sel.value : CONFIG.DEFAULT_METRO;
+  var fRaw = $("no-freq").value.trim(), f = parseFloat(fRaw);
+  var fNote = "";
+  if(fRaw==="" || !isFinite(f)){ f = CONFIG.DEFAULT_OUTINGS_PER_WEEK; }
+  else if(f < 0){ f = 0; }
+  if(f > CONFIG.MAX_OUTINGS_PER_WEEK){ f = CONFIG.MAX_OUTINGS_PER_WEEK; fNote="max"; }
+  if(f > 0 && f < CONFIG.MIN_OUTINGS_PER_WEEK){ f = CONFIG.MIN_OUTINGS_PER_WEEK; fNote="min"; }
+  var rRaw = $("no-repl").value.trim(), r = parseFloat(rRaw);
+  if(rRaw==="" || !isFinite(r) || r<0) r = CONFIG.DEFAULT_REPLACEMENT_USD;
+  var dRaw = parseInt($("no-drinks").value, 10), d = isFinite(dRaw) ? dRaw : CONFIG.DEFAULT_DRINKS;
+  d = Math.min(CONFIG.MAX_DRINKS, Math.max(CONFIG.MIN_DRINKS, d));
+  var notes = [];
+  function money(id, max, label){
+    var raw = $(id).value.replace(/[$,\s]/g, "");
+    if(raw === "") return null;
+    var v = Number(raw);
+    if(!isFinite(v) || v <= 0){ notes.push(label+" must be a number above $0, so we used our figure."); return null; }
+    if(v > max){ notes.push(label+" is capped at "+usd(max)+", so we used that."); return max; }
+    return v;
+  }
+  var own = money("no-owncost", CONFIG.OWN_COST_MAX_USD, "Your cost per night");
+  var goals = {
+    rent: money("no-rent", CONFIG.RENT_MAX_USD, "Your monthly rent"),
+    trip: money("no-trip", CONFIG.GOAL_MAX_USD, "Your trip budget"),
+    goal: money("no-goal", CONFIG.GOAL_MAX_USD, "Your emergency savings goal"),
+    debt: money("no-debt", CONFIG.GOAL_MAX_USD, "Your debt balance")
+  };
+  return {metro:metro, freq:f, fNote:fNote, repl:r, infl:$("no-infl").checked, drinks:d, own:own, goals:goals, notes:notes};
+}
+/* cost of one night for N drinks: the stored 3-drink figure plus or minus (N - 3) / 3 of its drink part
+   (drink prices, their taxes and the 20% tip on them). N = 3 returns the stored figure exactly. */
+function nightCost(m, n){ return Math.round((m.calc + (n - 3) / 3 * m.dp) * 100) / 100; }
+/* total over N years; with inflation, year 1 is today's price and each later year rises by the rate */
+function overYears(perOuting, perWeek, years, infl){
+  var perYear = perOuting*perWeek*CONFIG.WEEKS_PER_YEAR, sum=0, g=1+CONFIG.INFLATION_RATE_PCT/100;
+  for(var y=0;y<years;y++){ sum += perYear*(infl?Math.pow(g,y):1); }
+  return sum;
+}
+function tenth(x){ return (x>0 && x<0.05) ? "Under 0.1" : num(x,1); }
+/* shares under 5% are shown as a fraction, not a percentage */
+function times(x){ if(x>=1) return num(x, x>=10?0:1)+" times"; if(x>=0.05) return Math.round(x*100)+"%"; return "About 1/"+Math.round(1/x).toLocaleString("en-US"); }
+function compute(){
+  var s = readState(), m = byName[s.metro];
+  var cost = s.own != null ? s.own : nightCost(m, s.drinks);
+  var save = Math.max(0, cost - s.repl);
+  var out = {s:s, m:m, cost:cost, none:false, save:save, years:{}};
+  [1,5,10].forEach(function(y){ out.years[y]={spend:overYears(cost,s.freq,y,s.infl), save:overYears(save,s.freq,y,s.infl)}; });
+  return out;
+}
+function freqWords(f){
+  if(f===1) return "once a week";
+  if(f===0.25) return "about once a month";
+  if(f===0.5) return "about twice a month";
+  return num(f, f%1?2:0).replace(/\.?0+$/,"")+" times a week";
+}
+function render(){
+  var o = compute(), s=o.s, m=o.m;
+  var showWarn = s.own == null;
+  var cmp = $("no-cmpline"); var showCmp = m.measured && s.own == null;
+  cmp.hidden = !showCmp; cmp.textContent = showCmp ? CONFIG.COMPARE_LABEL+": "+usd(m.total,true)+" a night with 3 drinks." : "";
+  $("no-warn").hidden = !showWarn;
+  $("no-warn").textContent = showWarn ? CONFIG.MODELED_WARNING + (s.drinks !== CONFIG.DEFAULT_DRINKS ? " For "+s.drinks+(s.drinks===1?" drink":" drinks")+", we scaled the drink part of the estimate." : "") : "";
+  $("no-years").hidden = o.none; $("no-fundwrap").hidden = o.none;
+  $("no-years").style.display = o.none ? "none" : ""; $("no-fundwrap").style.display = o.none ? "none" : "";
+  if(o.none){
+    $("no-summary").innerHTML = "<strong>"+esc(m.metro)+":</strong> "+esc(CONFIG.NO_CALC_MESSAGE)+" Median rent here is "+usd(m.rent)+" a month. Choose one of the "+METROS.filter(function(x){return x.calc!=null;}).length+" compared metros to see the calculator.";
+    $("no-msg").hidden = true;
+    renderAssume(o); writeHash(s); return;
+  }
+  if(s.own != null){
+    $("no-summary").innerHTML = "Using your own cost of <strong>"+usd(o.cost,true)+"</strong> a night. Going out "+esc(freqWords(s.freq))+" adds up to:";
+  } else {
+    $("no-summary").innerHTML = "A night out"+(s.drinks!==CONFIG.DEFAULT_DRINKS?" with "+s.drinks+(s.drinks===1?" drink":" drinks"):"")+" in <strong>"+esc(m.metro)+"</strong> costs about <strong>"+usd(o.cost,true)+"</strong> (modeled estimate). Going out "+esc(freqWords(s.freq))+" adds up to:";
+  }
+  var h="";
+  [1,5,10].forEach(function(y){
+    h += '<div class="no-year"><div><div class="lbl">'+y+(y===1?" year":" years")+'</div><div class="sub">Spent on nights out'+(s.repl>0?"<br>Saved: "+usd(o.years[y].save):"")+'</div></div><div class="big">'+usd(o.years[y].spend)+"</div></div>";
+  });
+  $("no-years").innerHTML = h;
+
+  var msg = "";
+  if(s.freq===0) msg = "With zero nights out, there is nothing to add up. Enter at least 0.25 nights per week.";
+  else if(o.save===0) msg = "What you’d spend instead ("+usd(s.repl,true)+") is the same as or more than the cost of a night out"+(s.own!=null?"":" in "+esc(m.metro))+" ("+usd(o.cost,true)+"), so there are no savings to put toward other goals.";
+  if(s.fNote==="max") msg = (msg?msg+" ":"")+"Nights out per week is capped at "+CONFIG.MAX_OUTINGS_PER_WEEK+".";
+  if(s.fNote==="min") msg = (msg?msg+" ":"")+"Nights out per week starts at "+CONFIG.MIN_OUTINGS_PER_WEEK+", so we used that.";
+  if(s.notes.length) msg = (msg?msg+" ":"")+s.notes.join(" ");
+  $("no-msg").hidden = !msg; $("no-msg").textContent = msg;
+
+  var sv = o.years[fundYears].save;
+  Array.prototype.forEach.call(document.querySelectorAll(".no-seg button"), function(b){ b.setAttribute("aria-pressed", String(+b.getAttribute("data-y")===fundYears)); });
+  var lead = "Savings over "+fundYears+(fundYears===1?" year":" years")+": <strong>"+usd(sv)+"</strong>"+(s.repl>0?" (each night costs "+usd(o.cost,true)+", minus "+usd(s.repl,true)+" spent instead).":".");
+  var G = s.goals;
+  var rentV = G.rent != null ? G.rent : m.rent, cushV = G.goal != null ? G.goal : REF.cushion,
+      debtV = G.debt != null ? G.debt : REF.debt, tripV = G.trip != null ? G.trip : CONFIG.EXAMPLE_TRIP_BUDGET_USD;
+  var rent = sv/rentV, cushion = sv/cushV, debt = sv/debtV, trip = sv/tripV;
+  var rentLab = G.rent != null ? "of rent, at your rent of "+usd(rentV)+" a month" : "of rent, at "+esc(m.metro)+"’s median rent of "+usd(rentV)+" a month";
+  var cushLab = G.goal != null ? (cushion>=1?"":"of ")+"your emergency savings goal of "+usd(cushV) : (cushion>=1?"a":"of a")+" 3-month emergency fund ("+usd(cushV)+", based on national average household spending)";
+  var debtLab = G.debt != null ? (debt>=1?"":"of ")+"your debt balance of "+usd(debtV) : (debt>=1?"the":"of the")+" average debt per person with a credit report ("+usd(debtV)+", national)";
+  var tripLab = G.trip != null ? "using your trip budget of "+usd(tripV)+" per trip" : "using an example trip budget of "+usd(tripV)+" per trip";
+  $("no-fund").innerHTML =
+    '<li class="no-fundlead" style="grid-column:1/-1;border-left-color:var(--green);background:#fff;border:1px solid var(--line);border-left:4px solid var(--green)">'+lead+"</li>"+
+    '<li><div class="v">'+tenth(rent)+" months</div><div class=\"d\">"+rentLab+"</div></li>"+
+    '<li><div class="v">'+times(cushion)+"</div><div class=\"d\">"+cushLab+"</div></li>"+
+    '<li><div class="v">'+times(debt)+"</div><div class=\"d\">"+debtLab+"</div>"+(G.debt != null ? "" : "<div class=\"d no-ourcalc\">Our calculation from New York Fed data.</div>")+"</li>"+
+    '<li><div class="v">'+tenth(trip)+" trips</div><div class=\"d\">"+tripLab+"</div></li>";
+  Array.prototype.forEach.call(document.querySelectorAll("#no-fund li:not(.no-fundlead)"), function(li){ li.hidden = sv<=0; li.style.display = sv<=0 ? "none" : ""; });
+  renderAssume(o);
+  writeHash(s);
+}
+function renderAssume(o){
+  var s=o.s, m=o.m;
+  var items = [
+    "Nights out: "+esc(freqWords(s.freq))+", for "+CONFIG.WEEKS_PER_YEAR+" weeks a year.",
+    s.own != null ? "Cost per night: "+usd(o.cost,true)+", the cost you entered. The metro figure and the drinks setting are not used."
+    : (s.drinks === CONFIG.DEFAULT_DRINKS
+        ? "Cost per night: "+usd(o.cost,true)+", the modeled night out estimate for "+esc(m.metro)+" in the table above. It is a modeled estimate, not a measured price."
+        : "Cost per night: "+usd(o.cost,true)+" for "+s.drinks+(s.drinks===1?" drink":" drinks")+". We start from the modeled night out estimate for "+esc(m.metro)+" (3 drinks and 1 appetizer) and scale its drink part, with the same local taxes and 20% tip. The rides stay the same. It is a modeled estimate, not a measured price."),
+    "Spent instead: "+usd(s.repl,true)+" per night. Savings per night are the night out cost minus this amount, and never less than $0.",
+    s.infl ? "Rising prices: on. The night out and the amount spent instead rise each year after the first, using the recent national average rise in prices for food away from home (Bureau of Labor Statistics). Rent, the emergency fund, debt and the trip budget stay at today’s values."
+           : "Prices are held flat at today’s levels. Turn on rising prices to add the recent national average rise in prices for food away from home each year.",
+    "No interest or investment returns are added to the savings.",
+    "The debt comparison is our own calculation. It is based on New York Fed data and is not published or endorsed by the New York Fed.",
+    "The trip budget is an example, not data.",
+    "These results are for illustration only. They are not financial advice."
+  ];
+  $("no-assume-list").innerHTML = items.map(function(t){return "<li>"+t+"</li>";}).join("");
+}
+
+/* shareable state in the URL hash; every call guarded because embeds may be sandboxed */
+function writeHash(s){
+  var h = "#metro="+encodeURIComponent(s.metro)+"&n="+s.freq+"&instead="+s.repl+"&years="+fundYears+(s.infl?"&prices=rising":"");
+  /* new v13 inputs are added only when set, so default links match v12 */
+  if(s.drinks !== CONFIG.DEFAULT_DRINKS) h += "&drinks="+s.drinks;
+  if(s.own != null) h += "&own="+s.own;
+  ["rent","trip","goal","debt"].forEach(function(k){ if(s.goals[k] != null) h += "&"+k+"="+s.goals[k]; });
+  try { if(location.hash!==h) history.replaceState(null,"",h); } catch(e){}
+  currentHash = h;
+}
+var currentHash = "";
+function readHash(){
+  var q={};
+  try { (location.hash||"").replace(/^#/,"").split("&").forEach(function(p){ var kv=p.split("="); if(kv[0]) q[kv[0]]=decodeURIComponent(kv[1]||""); }); } catch(e){}
+  sel.value = byName[q.metro] ? q.metro : CONFIG.DEFAULT_METRO;
+  var n=parseFloat(q.n); $("no-freq").value = (isFinite(n)&&n>=0) ? String(n) : String(CONFIG.DEFAULT_OUTINGS_PER_WEEK);
+  var r=parseFloat(q.instead); $("no-repl").value = (isFinite(r)&&r>=0) ? String(r) : String(CONFIG.DEFAULT_REPLACEMENT_USD);
+  var y=parseInt(q.years,10); fundYears = (y===1||y===5||y===10) ? y : CONFIG.DEFAULT_FUND_YEARS;
+  $("no-infl").checked = q.prices==="rising";
+  var d=parseInt(q.drinks,10); $("no-drinks").value = String((isFinite(d) && d>=CONFIG.MIN_DRINKS && d<=CONFIG.MAX_DRINKS) ? d : CONFIG.DEFAULT_DRINKS);
+  var anyOwn = false;
+  [["own","no-owncost"],["rent","no-rent"],["trip","no-trip"],["goal","no-goal"],["debt","no-debt"]].forEach(function(p){
+    var v = parseFloat(q[p[0]]);
+    if(isFinite(v) && v > 0){ $(p[1]).value = String(v); anyOwn = true; } else { $(p[1]).value = ""; }
+  });
+  if(anyOwn) $("no-own").open = true;
+}
+function shareUrl(){
+  var base=""; try { base = location.href.split("#")[0]; } catch(e){}
+  return base + currentHash;
+}
+$("no-copy").addEventListener("click", function(){
+  var url = shareUrl(), done=function(ok){
+    $("no-status").textContent = ok ? "Link copied." : "Copy the link below.";
+    if(!ok){ var f=$("no-link"); f.hidden=false; f.value=url; f.focus(); f.select(); }
+  };
+  try {
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(function(){done(true);},function(){done(false);}); }
+    else done(false);
+  } catch(e){ done(false); }
+});
+Array.prototype.forEach.call(document.querySelectorAll(".no-seg button"), function(b){
+  b.addEventListener("click", function(){ fundYears=+b.getAttribute("data-y"); render(); });
+});
+["no-metro","no-freq","no-repl","no-infl","no-drinks","no-owncost","no-rent","no-trip","no-goal","no-debt"].forEach(function(id){
+  $(id).addEventListener("input", render); $(id).addEventListener("change", render);
+});
+/* on change (not while typing), show the number of nights actually used: blank becomes the default, values above the cap become the cap */
+$("no-freq").addEventListener("change", function(){ var st = readState(); if($("no-freq").value !== String(st.freq)){ $("no-freq").value = String(st.freq); render(); } });
+
+/* ---------- METHODOLOGY ---------- */
+$("no-method-list").innerHTML = DATA.method.map(function(t){return "<li>"+t+"</li>";}).join("");
+
+readHash(); render();
+})();
+</script>
+</body>
+</html>
