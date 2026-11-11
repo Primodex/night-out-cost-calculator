@@ -1,6 +1,6 @@
-# The Cost of a Night Out Drinking in the 50 Largest U.S. Metros
+# How Much a Weekly Night Out Costs Over 1, 5 and 10 Years
 
-Interactive table and calculator (Fractl DJC campaign). Estimates the same standard night out
+Interactive calculator (Fractl DJC campaign). v16 is calculator-only; the 50-metro ranking table was removed. Estimates the same standard night out
 (3 drinks: a beer, a cocktail and a glass of wine, plus tax, a 20% tip and a rideshare) in the
 50 largest U.S. metro areas, using sampled bar menu prices scaled by BEA regional price levels,
 local taxes and rideshare rates. Shows cost, hours of work at the local median wage, cost of
