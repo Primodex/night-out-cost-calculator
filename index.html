@@ -71,6 +71,9 @@
 .no-assume{margin-top:18px;border:1px solid var(--line);border-radius:8px;padding:14px 16px}
 .no-assume ul{margin:0;padding-left:1.2em;font-size:.88rem;color:var(--muted)}
 .no-assume li{margin-bottom:4px}
+.no-assume p{margin:0 0 .6em;font-size:.92rem}
+.no-assume p:last-child{margin-bottom:0}
+.no-sources{font-size:.85rem;color:var(--muted);margin:8px 0 0}
 .no-vh{position:absolute !important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @media (max-width:760px){
   .no-calc{grid-template-columns:1fr}
@@ -165,13 +168,17 @@
 
   <div class="no-assume" aria-labelledby="no-h-assume">
     <h3 id="no-h-assume">How the calculator works</h3>
-    <ul id="no-assume-list"></ul>
+    <p>We start with what one night out costs in your metro: three drinks, an appetizer, tax, a 20% tip and two rides home. Then we multiply by how many nights you go each week, for 52 weeks a year.</p>
+    <p>If you’d spend money on something else those nights, like dinner at home, we subtract it. What’s left is what you could put toward rent, an emergency fund, debt or a trip.</p>
+    <p>Prices stay the same unless you turn on rising prices. Type in your own numbers and they replace ours.</p>
   </div>
   <ul class="no-notes">
     <li>Includes 3 drinks (a beer, a cocktail and a glass of wine), 1 appetizer, local taxes, a 20% tip and two 5-mile rideshare trips, at the default settings. Modeled estimate for every metro.</li>
     <li>* Atlanta’s local drink tax is not included, because the city does not publish its rate. Atlanta’s total may be slightly low.</li>
     <li>© 2026 Federal Reserve Bank of New York. Content from the New York Fed subject to the Terms of Use at newyorkfed.org.</li>
+    <li>The debt comparison is our own calculation. It is based on New York Fed data and is not published or endorsed by the New York Fed.</li>
   </ul>
+  <p class="no-sources">Sources: Bureau of Labor Statistics (wages), Census Bureau (rent) and Bureau of Economic Analysis (price levels).</p>
 </section>
 
 
@@ -290,7 +297,7 @@ function render(){
   if(o.none){
     $("no-summary").innerHTML = "<strong>"+esc(m.metro)+":</strong> "+esc(CONFIG.NO_CALC_MESSAGE)+" Median rent here is "+usd(m.rent)+" a month. Choose one of the "+METROS.filter(function(x){return x.calc!=null;}).length+" compared metros to see the calculator.";
     $("no-msg").hidden = true;
-    renderAssume(o); writeHash(s); return;
+    writeHash(s); return;
   }
   if(s.own != null){
     $("no-summary").innerHTML = "Using your own cost of <strong>"+usd(o.cost,true)+"</strong> a night. Going out "+esc(freqWords(s.freq))+" adds up to:";
@@ -329,26 +336,7 @@ function render(){
     '<li><div class="v">'+times(debt)+"</div><div class=\"d\">"+debtLab+"</div>"+(G.debt != null ? "" : "<div class=\"d no-ourcalc\">Our calculation from New York Fed data.</div>")+"</li>"+
     '<li><div class="v">'+tenth(trip)+" trips</div><div class=\"d\">"+tripLab+"</div></li>";
   Array.prototype.forEach.call(document.querySelectorAll("#no-fund li:not(.no-fundlead)"), function(li){ li.hidden = sv<=0; li.style.display = sv<=0 ? "none" : ""; });
-  renderAssume(o);
   writeHash(s);
-}
-function renderAssume(o){
-  var s=o.s, m=o.m;
-  var items = [
-    "Nights out: "+esc(freqWords(s.freq))+", for "+CONFIG.WEEKS_PER_YEAR+" weeks a year.",
-    s.own != null ? "Cost per night: "+usd(o.cost,true)+", the cost you entered. The metro figure and the drinks setting are not used."
-    : (s.drinks === CONFIG.DEFAULT_DRINKS
-        ? "Cost per night: "+usd(o.cost,true)+", the modeled night out estimate for "+esc(m.metro)+". It is a modeled estimate, not a measured price."
-        : "Cost per night: "+usd(o.cost,true)+" for "+s.drinks+(s.drinks===1?" drink":" drinks")+". We start from the modeled night out estimate for "+esc(m.metro)+" (3 drinks and 1 appetizer) and scale its drink part, with the same local taxes and 20% tip. The rides stay the same. It is a modeled estimate, not a measured price."),
-    "Spent instead: "+usd(s.repl,true)+" per night. Savings per night are the night out cost minus this amount, and never less than $0.",
-    s.infl ? "Rising prices: on. The night out and the amount spent instead rise each year after the first, using the recent national average rise in prices for food away from home (Bureau of Labor Statistics). Rent, the emergency fund, debt and the trip budget stay at today’s values."
-           : "Prices are held flat at today’s levels. Turn on rising prices to add the recent national average rise in prices for food away from home each year.",
-    "No interest or investment returns are added to the savings.",
-    "The debt comparison is our own calculation. It is based on New York Fed data and is not published or endorsed by the New York Fed.",
-    "The trip budget is an example, not data.",
-    "These results are for illustration only. They are not financial advice."
-  ];
-  $("no-assume-list").innerHTML = items.map(function(t){return "<li>"+t+"</li>";}).join("");
 }
 
 /* shareable state in the URL hash; every call guarded because embeds may be sandboxed */
